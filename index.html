@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEIKO | MODEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-400: #999999;
+            --gray-600: #666666;
+            --gray-800: #333333;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .text-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        .nav-id {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+        .nav-links {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+            opacity: 0.7;
+        }
+        .nav-links a:hover { opacity: 1; }
+        .lang-switch {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .lang-switch:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .hero {
+            min-height: 100vh;
+            background-color: var(--black);
+            display: grid;
+            grid-template-columns: 50% 50%;
+            position: relative;
+        }
+        .hero-image-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem 4rem;
+        }
+        .hero-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.05);
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 6rem 4rem 4rem 3rem;
+            position: relative;
+        }
+        .hero-label-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 4rem;
+        }
+        .hero-tag { text-align: left; }
+        .hero-tag .label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+        .hero-tag .id {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+        .hero-year {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            opacity: 0.4;
+        }
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+        .hero-subtitle {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            opacity: 0.5;
+            max-width: 320px;
+            margin-bottom: 3rem;
+        }
+        .hero-meta-list {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            line-height: 2;
+        }
+        .hero-footer {
+            position: absolute;
+            bottom: 3rem;
+            left: 4rem;
+            right: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hero-footer-left {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+        .hero-footer-center {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+        section { position: relative; }
+        .about {
+            background-color: var(--white);
+            color: var(--black);
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 6rem;
+            min-height: 100vh;
+            padding: 8rem 4rem;
+        }
+        .about-left { position: relative; }
+        .about-vertical-title {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .about-left-content {
+            margin-left: 6rem;
+            margin-top: 2rem;
+        }
+        .about-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-bottom: 2rem;
+        }
+        .about-image-small {
+            width: 200px;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            margin-bottom: 2rem;
+        }
+        .about-right { padding-top: 4rem; }
+        .about-title-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            line-height: 1.2;
+        }
+        .about-text {
+            font-size: 0.95rem;
+            line-height: 2.2;
+            opacity: 0.7;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+        .about-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        .about-stat h4 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .about-stat p {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+        .snap {
+            background-color: var(--gray-100);
+            color: var(--black);
+            padding: 8rem 4rem;
+        }
+        .snap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .snap-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+        }
+        .snap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .snap-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            background: var(--gray-200);
+            cursor: pointer;
+        }
+        .snap-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+        .snap-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .works {
+            background-color: var(--black);
+            padding: 8rem 4rem;
+        }
+        .works-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .works-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+        }
+        .works-tabs {
+            display: flex;
+            gap: 3rem;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            position: relative;
+            font-family: 'Inter', sans-serif;
+            transition: color 0.3s;
+        }
+        .tab-btn:hover, .tab-btn.active { color: var(--white); }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--white);
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        .project-card {
+            cursor: pointer;
+            position: relative;
+        }
+        .project-thumbnail {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            margin-bottom: 1.5rem;
+            background: var(--gray-800);
+        }
+        .project-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+        .project-card:hover .project-thumbnail img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .project-card:hover .project-overlay { opacity: 1; }
+        .view-btn {
+            width: 80px;
+            height: 80px;
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        .view-btn:hover {
+            background: white;
+            color: var(--black);
+        }
+        .project-info { padding: 0 0.5rem; }
+        .project-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 0.5rem;
+        }
+        .project-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+        .project-season {
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+        .project-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .project-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(10,10,10,0.98);
+            backdrop-filter: blur(10px);
+        }
+        .modal-content {
+            position: relative;
+            width: 95%;
+            max-width: 1400px;
+            max-height: 95vh;
+            margin: auto;
+            background: var(--black);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-gallery-section {
+            position: relative;
+            background: var(--gray-800);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-tab {
+            flex: 1;
+            padding: 1.2rem;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-tab:hover { color: rgba(255,255,255,0.7); }
+        .modal-tab.active {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+        .modal-gallery-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .gallery-grid img, .gallery-grid video {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+            cursor: pointer;
+        }
+        .gallery-grid img:hover { filter: grayscale(0%); }
+        .gallery-grid video { filter: none; }
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: none;
+            background: rgba(0,0,0,0.98);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 3000;
+            pointer-events: none;
+        }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3001;
+            pointer-events: auto;
+        }
+        .lightbox-close:hover {
+            background: white;
+            color: black;
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3001;
+            pointer-events: auto;
+        }
+        .lightbox-nav:hover {
+            background: white;
+            color: black;
+        }
+        .lightbox-prev { left: 2rem; }
+        .lightbox-next { right: 2rem; }
+        .lightbox-counter {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+        }
+        .modal-info {
+            padding: 3rem;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 45px;
+            height: 45px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        .modal-close:hover {
+            background: white;
+            border-color: white;
+        }
+        .modal-close::before, .modal-close::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 1px;
+            background: white;
+            transition: background 0.3s;
+        }
+        .modal-close:hover::before, .modal-close:hover::after { background: var(--black); }
+        .modal-close::before { transform: rotate(45deg); }
+        .modal-close::after { transform: rotate(-45deg); }
+        .modal-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 1rem;
+        }
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        .modal-season {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            margin-bottom: 2rem;
+        }
+        .modal-description {
+            opacity: 0.6;
+            font-size: 0.85rem;
+            line-height: 1.9;
+            margin-bottom: 3rem;
+        }
+        .modal-meta {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+        }
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .meta-row:last-child { border-bottom: none; }
+        .meta-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.35;
+        }
+        .meta-value {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .creative {
+            background-color: var(--black);
+            padding: 8rem 4rem;
+            overflow: hidden;
+        }
+        .creative-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .creative-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+        }
+        .creative-scroll-hint {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .creative-scroll-hint::after {
+            content: '->';
+            animation: scrollHint 1.5s infinite;
+        }
+        @keyframes scrollHint {
+            0%, 100% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(10px); opacity: 1; }
+        }
+        .creative-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .creative-project-card {
+            cursor: pointer;
+            position: relative;
+        }
+        .creative-project-thumbnail {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            margin-bottom: 1rem;
+            background: var(--gray-800);
+        }
+        .creative-project-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+        .creative-project-card:hover .creative-project-thumbnail img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .creative-project-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .creative-project-card:hover .creative-project-overlay { opacity: 1; }
+        .creative-project-info { padding: 0 0.5rem; }
+        .creative-project-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        .lifestyle {
+            background-color: var(--black);
+            padding: 8rem 4rem;
+        }
+        .lifestyle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .lifestyle-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+        }
+        .lifestyle-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .lifestyle-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--gray-800);
+        }
+        .lifestyle-item:nth-child(3n+2) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .lifestyle-item img, .lifestyle-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+        .lifestyle-item video { filter: none; }
+        .lifestyle-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .life {
+            background-color: var(--gray-100);
+            color: var(--black);
+            padding: 8rem 4rem;
+        }
+        .life-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+        }
+        .life-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            line-height: 1.1;
+        }
+        .life-subtitle {
+            font-size: 0.85rem;
+            opacity: 0.5;
+            max-width: 280px;
+            text-align: right;
+            line-height: 1.8;
+        }
+        .life-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .life-item.hidden-item {
+            display: none;
+        }
+
+        .expand-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: 1px solid currentColor;
+            color: inherit;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .expand-btn:hover {
+            background: rgba(128,128,128,0.15);
+        }
+        .expand-btn .icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .expand-btn.expanded .icon {
+            transform: rotate(45deg);
+        }
+        .expand-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .lifestyle-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .lifestyle-item.hidden-item {
+            display: none;
+        }
+        .life-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--gray-200);
+        }
+        .life-item:nth-child(2) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .life-item:nth-child(6) { grid-column: span 2; }
+        .life-item img, .life-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+        .life-item video { filter: none; }
+        .life-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        .contact {
+            background-color: var(--black);
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 4rem;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            line-height: 1.2;
+        }
+        .contact-item { margin-bottom: 2rem; }
+        .contact-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.35;
+            margin-bottom: 0.5rem;
+        }
+        .contact-value {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .form-group { position: relative; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1.2rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: rgba(255,255,255,0.4);
+        }
+        .form-group label {
+            position: absolute;
+            left: 0;
+            top: 1.2rem;
+            font-size: 0.75rem;
+            opacity: 0.35;
+            pointer-events: none;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:focus + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: -0.5rem;
+            font-size: 0.6rem;
+            opacity: 0.6;
+        }
+        .submit-btn {
+            align-self: flex-start;
+            padding: 1rem 3rem;
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            margin-top: 1.5rem;
+        }
+        .submit-btn:hover {
+            background: white;
+            color: var(--black);
+            border-color: white;
+        }
+        footer {
+            background-color: var(--black);
+            padding: 3rem 4rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+        }
+        .footer-links a {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+        .footer-copy {
+            font-size: 0.65rem;
+            opacity: 0.25;
+        }
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-image-container { padding: 6rem 2rem 2rem; }
+            .hero-image { height: 50vh; }
+            .hero-content { padding: 2rem; }
+            .about {
+                grid-template-columns: 1fr;
+                padding: 5rem 2rem;
+            }
+            .about-vertical-title {
+                position: relative;
+                writing-mode: horizontal-tb;
+                transform: none;
+                margin-bottom: 2rem;
+            }
+            .about-left-content { margin-left: 0; }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .snap-grid { grid-template-columns: repeat(2, 1fr); }
+            .lifestyle-grid { grid-template-columns: repeat(2, 1fr); }
+            .modal-content {
+                grid-template-columns: 1fr;
+                max-height: 98vh;
+            }
+            .modal-info {
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.1);
+                max-height: 30vh;
+            }
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            .lightbox-prev { left: 1rem; }
+            .lightbox-next { right: 1rem; }
+            .life-grid { grid-template-columns: repeat(2, 1fr); }
+            nav { padding: 1.5rem 2rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-left { gap: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            .projects-grid { grid-template-columns: 1fr; }
+            .snap-grid { grid-template-columns: 1fr; }
+            .lifestyle-grid { grid-template-columns: 1fr; }
+            .hero-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            .works-header, .creative-header, .snap-header, .lifestyle-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+            .about-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .life-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+            footer {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in { animation: fadeInUp 0.6s ease forwards; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); }
+        .modal-gallery-content::-webkit-scrollbar { width: 4px; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-left">
+            <div class="nav-id">@ Heiko</div>
+            <ul class="nav-links">
+                <li><a href="#about" data-i18n="nav.about">简介</a></li>
+                <li><a href="#snap">Snap</a></li>
+                <li><a href="#works" data-i18n="nav.works">作品</a></li>
+                <li><a href="#creative">合作创作</a></li>
+                <li><a href="#life" data-i18n="nav.life">花絮</a></li>
+                <li><a href="#lifestyle">生活</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">联系</a></li>
+            </ul>
+        </div>
+        <button class="lang-switch" onclick="toggleLanguage()">CN / EN</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-image-container">
+            <img src="./Hero图.jpg" alt="Heiko" class="hero-image">
+        </div>
+        <div class="hero-content">
+            <div class="hero-label-top">
+                <div class="hero-tag">
+                    <div class="label" data-i18n="hero.label">Model Portfolio</div>
+                    <div class="id">Wang Xuening</div>
+                </div>
+                <div class="hero-year">2026 SS</div>
+            </div>
+            <h1 class="hero-title font-serif">HEIKO</h1>
+
+            <div class="hero-meta-list">
+                <span data-i18n="hero.location">BEIJING Based</span><br>
+                <span data-i18n="hero.available">Available Worldwide</span>
+            </div>
+        </div>
+        <div class="hero-footer">
+            <div class="hero-footer-left">
+                <span data-i18n="hero.role1">Model</span>
+                <span>○</span>
+                <span data-i18n="hero.role2">Artist</span>
+            </div>
+            <div class="hero-footer-center" data-i18n="hero.since">Since 2022</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-left">
+            <div class="about-vertical-title font-serif">ABOUT</div>
+            <div class="about-left-content">
+                <div class="about-label" data-i18n="about.label">个人简介</div>
+                <img src="./简介图.jpg" alt="About" class="about-image-small">
+            </div>
+        </div>
+        <div class="about-right">
+            <h2 class="about-title-main font-serif">
+                Heiko<br>
+                <span data-i18n="about.name">王雪宁</span>
+            </h2>
+            <p class="about-text" data-i18n="about.text1">
+                身高 173cm，从事专业模特工作已有四年。毕业于TAFA油画系，BIFT研究生在读。
+            </p>
+
+            <div class="about-stats-grid">
+                <div class="about-stat">
+                    <h4>173</h4>
+                    <p data-i18n="about.stat1">Height / CM</p>
+                </div>
+                <div class="about-stat">
+                    <h4>74-60-88</h4>
+                    <p data-i18n="about.stat2">Measurements</p>
+                </div>
+                <div class="about-stat">
+                    <h4>39</h4>
+                    <p data-i18n="about.stat3">Shoe Size</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Snap Section -->
+    <section class="snap" id="snap">
+        <div class="snap-header">
+            <h2 class="snap-title font-serif" data-i18n="snap.title">Snap / Street Style</h2>
+        </div>
+        <div class="snap-grid">
+            <div class="snap-item">
+                <img src="./Snap/微信图片_20260215215059_367_550.jpg" alt="Snap 1">
+            </div>
+            <div class="snap-item">
+                <img src="./Snap/微信图片_20260215215104_368_550.jpg" alt="Snap 2">
+            </div>
+            <div class="snap-item">
+                <img src="./Snap/微信图片_20260215215104_369_550.jpg" alt="Snap 3">
+            </div>
+            <div class="snap-item">
+                <img src="./Snap/微信图片_20260215215105_370_550.jpg" alt="Snap 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section class="works" id="works">
+        <div class="works-header">
+            <h2 class="works-title font-serif" data-i18n="works.title">Selected Works</h2>
+            <div class="works-tabs">
+                <button class="tab-btn active" data-filter="all" data-i18n="works.tab.all">全部</button>
+                <button class="tab-btn" data-filter="commercial" data-i18n="works.tab.commercial">商拍</button>
+                <button class="tab-btn" data-filter="wedding" data-i18n="works.tab.wedding">婚样</button>
+            </div>
+        </div>
+        <div class="projects-grid" id="projectsGrid">
+        </div>
+    </section>
+
+    <!-- Project Detail Modal -->
+    <div class="project-modal" id="projectModal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"></button>
+            <div class="modal-gallery-section">
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="campaign">Campaign</button>
+                    <button class="modal-tab" data-tab="lookbook">Look Book</button>
+                </div>
+                <div class="modal-gallery-content" id="modalGalleryContent">
+                </div>
+            </div>
+            <div class="modal-info">
+                <div class="modal-category" id="modalCategory">Commercial</div>
+                <h2 class="modal-title font-serif" id="modalTitle">Project Title</h2>
+                <div class="modal-season" id="modalSeason">2025 AW</div>
+                <p class="modal-description" id="modalDescription">项目描述...</p>
+                <div class="modal-meta">
+                    <div class="meta-row">
+                        <span class="meta-label" data-i18n="modal.brand">Brand</span>
+                        <span class="meta-value" id="modalClient">Brand</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="Lightbox" class="lightbox-img" id="lightboxImg">
+        </div>
+        <button class="lightbox-close" onclick="event.stopPropagation(); closeLightbox();">×</button>
+        <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); changeLightboxImage(-1);">‹</button>
+        <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); changeLightboxImage(1);">›</button>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 10</div>
+    </div>
+
+    <!-- Creative Section -->
+    <section class="creative" id="creative">
+        <div class="creative-header">
+            <h2 class="creative-title font-serif" data-i18n="creative.title">合作创作 / Collaboration</h2>
+            <div class="creative-scroll-hint" data-i18n="creative.hint">Scroll to explore · Click to view</div>
+        </div>
+        <div class="creative-grid" id="creativeGrid">
+        </div>
+    </section>
+
+    <!-- Life Section -->
+    <section class="life" id="life">
+        <div class="life-header">
+            <h2 class="life-title font-serif" data-i18n="life.title">Behind<br>the Scenes</h2>
+        </div>
+        <div class="life-grid" id="lifeGrid">
+            <div class="life-item" data-index="0"><video src="./behind-scenes/0ad1d9c4be2b8d3c433a4f7ead765fd9.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item" data-index="1"><img src="./behind-scenes/0cf16c9c1462ee023e80f144785047de.jpg" alt="Life 2"></div>
+            <div class="life-item" data-index="2"><video src="./behind-scenes/0d25ff26c83efe8dd9f907853358b5bb.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item" data-index="3"><video src="./behind-scenes/0eb07bc5ae2f9d8768bb320594a5d27a.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="4"><img src="./behind-scenes/12d90cf67301c5aad85153cf7ae182f9.jpg" alt="Life 5"></div>
+            <div class="life-item hidden-item" data-index="5"><video src="./behind-scenes/14573d7bfa268fc7c5a1a0faa27b5b3c.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="6"><img src="./behind-scenes/1aa0879fc1ca6bfb46a808ad54c7ddb1.jpg" alt="Life 7"></div>
+            <div class="life-item hidden-item" data-index="7"><video src="./behind-scenes/1be42967d0baae45088c7417fe452e1a.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="8"><img src="./behind-scenes/22b8d194767b46106482687eb13513dc.jpg" alt="Life 9"></div>
+            <div class="life-item hidden-item" data-index="9"><img src="./behind-scenes/27baa704c2b232c19e259bc13d85e988.jpg" alt="Life 10"></div>
+            <div class="life-item hidden-item" data-index="10"><video src="./behind-scenes/2c5ded1c60eac58e877ad119632fcf71.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="11"><video src="./behind-scenes/2d3243e2a1233f82dd9718a9e11db975.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="12"><video src="./behind-scenes/371bdfe76e05cf249ff828a597bbbab7.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="13"><img src="./behind-scenes/3cf9891b88c88e849aedf47ebb02185f.jpg" alt="Life 14"></div>
+            <div class="life-item hidden-item" data-index="14"><img src="./behind-scenes/43fd9bd7cc0607ecba399e08648e80da.jpg" alt="Life 15"></div>
+            <div class="life-item hidden-item" data-index="15"><video src="./behind-scenes/51c7158b631a43d2740f51cfe7dd9f77.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="16"><img src="./behind-scenes/548ec44f76887fd84ea496d3149509f5.jpg" alt="Life 17"></div>
+            <div class="life-item hidden-item" data-index="17"><img src="./behind-scenes/54a7adee33ceea828dafb9373a267966.jpg" alt="Life 18"></div>
+            <div class="life-item hidden-item" data-index="18"><video src="./behind-scenes/57c8896b522a604b93776a65ebc60943.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="19"><video src="./behind-scenes/580bd63b3a80e1df7d3d22ec0e7bd8a7.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="20"><img src="./behind-scenes/5cd4f910580f3553625b992be9b44a59.jpg" alt="Life 21"></div>
+            <div class="life-item hidden-item" data-index="21"><img src="./behind-scenes/5eb423c05aea09732687fd19a85b918a.jpg" alt="Life 22"></div>
+            <div class="life-item hidden-item" data-index="22"><img src="./behind-scenes/63970daa7c137ae0a3bf0591cb643821.jpg" alt="Life 23"></div>
+            <div class="life-item hidden-item" data-index="23"><img src="./behind-scenes/6bb69fb1f0d5e0f2c219a622a3b64510.jpg" alt="Life 24"></div>
+            <div class="life-item hidden-item" data-index="24"><video src="./behind-scenes/71b32a761b2cae91ef5f105e78434d18.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="25"><img src="./behind-scenes/83378a26dbb837c28d9dd71c3288065c.jpg" alt="Life 26"></div>
+            <div class="life-item hidden-item" data-index="26"><video src="./behind-scenes/87fce953d2f27fdc4f1f914eb091b66d.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="27"><video src="./behind-scenes/8af8771fe1a66b3ae83dce6da0149282.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="28"><img src="./behind-scenes/8b44db48a2d7f0cd2644cba88a8b5aed.jpg" alt="Life 29"></div>
+            <div class="life-item hidden-item" data-index="29"><img src="./behind-scenes/961565e4f686315ca2d31f46b40052a9.jpg" alt="Life 30"></div>
+            <div class="life-item hidden-item" data-index="30"><video src="./behind-scenes/9ad430cd30f180ca189540d39e27af05.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="31"><video src="./behind-scenes/9ba7dfabd7d7257452b25c3da9d95f17.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="32"><img src="./behind-scenes/9df315ec92730beaefea9e2518691812.jpg" alt="Life 33"></div>
+            <div class="life-item hidden-item" data-index="33"><img src="./behind-scenes/a0d8c15734e4c573310e6ef2dd60304d.jpg" alt="Life 34"></div>
+            <div class="life-item hidden-item" data-index="34"><img src="./behind-scenes/a2378e6b3414eec49e5bd484c85128d0.jpg" alt="Life 35"></div>
+            <div class="life-item hidden-item" data-index="35"><video src="./behind-scenes/ac5b941540aec2d47a60a02971a916e2.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="36"><img src="./behind-scenes/ac8d616286ff81b6026f02edd535d58c.jpg" alt="Life 37"></div>
+            <div class="life-item hidden-item" data-index="37"><video src="./behind-scenes/b12e2d9400fe985225fbd299f404f0d3.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="38"><img src="./behind-scenes/bc0eca971eb879a8f793904bd8058f68.jpg" alt="Life 39"></div>
+            <div class="life-item hidden-item" data-index="39"><video src="./behind-scenes/be779c34943aa18a699349f75c9876e4.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="40"><img src="./behind-scenes/c1759c81a255e88eb616940cc3df435e.jpg" alt="Life 41"></div>
+            <div class="life-item hidden-item" data-index="41"><video src="./behind-scenes/ce4c9f13e80d20567141ca453ec9fa89.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="42"><video src="./behind-scenes/d3af719af78686d3c5c3dc37082a9ac1.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="43"><img src="./behind-scenes/d3d4e9387967c45267d1e25952876221.jpg" alt="Life 44"></div>
+            <div class="life-item hidden-item" data-index="44"><img src="./behind-scenes/d6bd80fb0330fb363f30b8696dc3738c.jpg" alt="Life 45"></div>
+            <div class="life-item hidden-item" data-index="45"><img src="./behind-scenes/de159a4fb70b54d214577de54276c208.jpg" alt="Life 46"></div>
+            <div class="life-item hidden-item" data-index="46"><video src="./behind-scenes/e1991894129f854eb671c7d90fc1ba3b.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="47"><video src="./behind-scenes/e985be562f77343a79ff7bac9995706e.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="48"><img src="./behind-scenes/e9f9c6d11cb2e201eddf05340c899f1a.jpg" alt="Life 49"></div>
+            <div class="life-item hidden-item" data-index="49"><video src="./behind-scenes/ea287bed8f5d321b7ea4b8668f501f1c.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="50"><img src="./behind-scenes/f0c42cc44058ea195146d9efea3d0136.jpg" alt="Life 51"></div>
+            <div class="life-item hidden-item" data-index="51"><video src="./behind-scenes/f58d53bef2b1de7573fd3d1922c6c7ee.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="52"><video src="./behind-scenes/f601d457495976f3c70009600df603a6.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="53"><video src="./behind-scenes/fb41a02a6640a57c1160746b8b73a7df.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="life-item hidden-item" data-index="54"><img src="./behind-scenes/微信图片_20260215214549_243_550.jpg" alt="Life 55"></div>
+            <div class="life-item hidden-item" data-index="55"><img src="./behind-scenes/微信图片_20260215214555_246_550.jpg" alt="Life 56"></div>
+            <div class="life-item hidden-item" data-index="56"><img src="./behind-scenes/微信图片_20260215214558_248_550.jpg" alt="Life 57"></div>
+            <div class="life-item hidden-item" data-index="57"><img src="./behind-scenes/微信图片_20260215214600_249_550.jpg" alt="Life 58"></div>
+            <div class="life-item hidden-item" data-index="58"><img src="./behind-scenes/微信图片_20260215214604_251_550.jpg" alt="Life 59"></div>
+            <div class="life-item hidden-item" data-index="59"><img src="./behind-scenes/微信图片_20260215214606_253_550.jpg" alt="Life 60"></div>
+            <div class="life-item hidden-item" data-index="60"><img src="./behind-scenes/微信图片_20260215215116_377_550.jpg" alt="Life 61"></div>
+            <div class="life-item hidden-item" data-index="61"><img src="./behind-scenes/微信图片_20260215215117_378_550.jpg" alt="Life 62"></div>
+            <div class="life-item hidden-item" data-index="62"><img src="./behind-scenes/微信图片_20260215215117_379_550.jpg" alt="Life 63"></div>
+            <div class="life-item hidden-item" data-index="63"><img src="./behind-scenes/微信图片_20260215215120_380_550.jpg" alt="Life 64"></div>
+            <div class="life-item hidden-item" data-index="64"><img src="./behind-scenes/微信图片_20260215215124_381_550.jpg" alt="Life 65"></div>
+            <div class="life-item hidden-item" data-index="65"><img src="./behind-scenes/微信图片_20260215215140_391_550.jpg" alt="Life 66"></div>
+            <div class="life-item hidden-item" data-index="66"><img src="./behind-scenes/微信图片_20260215215141_392_550.jpg" alt="Life 67"></div>
+            <div class="life-item hidden-item" data-index="67"><img src="./behind-scenes/微信图片_20260215215142_394_550.jpg" alt="Life 68"></div>
+            <div class="life-item hidden-item" data-index="68"><img src="./behind-scenes/微信图片_20260215215941_564_550.jpg" alt="Life 69"></div>
+            <div class="life-item hidden-item" data-index="69"><img src="./behind-scenes/微信图片_20260215215946_565_550.jpg" alt="Life 70"></div>
+            <div class="life-item hidden-item" data-index="70"><img src="./behind-scenes/微信图片_20260215215947_566_550.jpg" alt="Life 71"></div>
+            <div class="life-item hidden-item" data-index="71"><img src="./behind-scenes/微信图片_20260215220051_591_550.jpg" alt="Life 72"></div>
+            <div class="life-item hidden-item" data-index="72"><img src="./behind-scenes/微信图片_20260215220053_592_550.jpg" alt="Life 73"></div>
+            <div class="life-item hidden-item" data-index="73"><img src="./behind-scenes/微信图片_20260215231548_715_550.jpg" alt="Life 74"></div>
+            <div class="life-item hidden-item" data-index="74"><img src="./behind-scenes/微信图片_20260215231552_716_550.jpg" alt="Life 75"></div>
+            <div class="life-item hidden-item" data-index="75"><img src="./behind-scenes/微信图片_20260215231553_717_550.jpg" alt="Life 76"></div>
+            <div class="life-item hidden-item" data-index="76"><img src="./behind-scenes/微信图片_20260215231554_718_550.jpg" alt="Life 77"></div>
+            <div class="life-item hidden-item" data-index="77"><img src="./behind-scenes/微信图片_20260215231557_719_550.jpg" alt="Life 78"></div>
+            <div class="life-item hidden-item" data-index="78"><img src="./behind-scenes/微信图片_20260215231601_720_550.jpg" alt="Life 79"></div>
+            <div class="life-item hidden-item" data-index="79"><img src="./behind-scenes/微信图片_20260215233843_917_550.jpg" alt="Life 80"></div>
+            <div class="life-item hidden-item" data-index="80"><img src="./behind-scenes/微信图片_20260215233846_920_550.jpg" alt="Life 81"></div>
+            <div class="life-item hidden-item" data-index="81"><img src="./behind-scenes/微信图片_20260215235737_934_550.jpg" alt="Life 82"></div>
+            <div class="life-item hidden-item" data-index="82"><img src="./behind-scenes/微信图片_20260215235739_935_550.jpg" alt="Life 83"></div>
+            <div class="life-item hidden-item" data-index="83"><img src="./behind-scenes/微信图片_20260215235745_936_550.jpg" alt="Life 84"></div>
+            <div class="life-item hidden-item" data-index="84"><img src="./behind-scenes/微信图片_20260215235754_945_550.jpg" alt="Life 85"></div>
+            <div class="life-item hidden-item" data-index="85"><img src="./behind-scenes/微信图片_20260215235756_946_550.jpg" alt="Life 86"></div>
+        </div>
+        <div class="expand-btn-container">
+            <button class="expand-btn" id="lifeExpandBtn" onclick="toggleSection('life')">
+                <span class="icon">+</span>
+                <span class="text" data-i18n="expand.expand">展开 / Expand</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Lifestyle Section -->
+    <section class="lifestyle" id="lifestyle">
+        <div class="lifestyle-header">
+            <h2 class="lifestyle-title font-serif" data-i18n="lifestyle.title">生活照 / Daily Life</h2>
+        </div>
+        <div class="lifestyle-grid" id="lifestyleGrid">
+            <div class="lifestyle-item" data-index="0"><img src="./lifestyle-photos/02440c27dfc138ae154543c9de566665.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item" data-index="1"><video src="./lifestyle-photos/029f45b59f843a5eb9997ec621af6947.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="lifestyle-item" data-index="2"><img src="./lifestyle-photos/05a92e958d7a080744924a94337748b4.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item" data-index="3"><img src="./lifestyle-photos/17509277a5b774a6e630c7dcf9c40ea6.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="4"><img src="./lifestyle-photos/35762620242c170c046b5fc341804adb.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="5"><img src="./lifestyle-photos/386bd24b0639e2d13817f575360be012.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="6"><img src="./lifestyle-photos/3dafb30ceb9c87d034787c2bbd5de9c2.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="7"><img src="./lifestyle-photos/887abe8812d931d0f4ea0c701206e493.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="8"><video src="./lifestyle-photos/b17c1cfd748674c1d1cd5d7f33c0ed54.mp4" controls style="width:100%;height:100%;object-fit:cover;"></video></div>
+            <div class="lifestyle-item hidden-item" data-index="9"><img src="./lifestyle-photos/b851a29ae269ad4748b8f9c5fdc81f7f.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="10"><img src="./lifestyle-photos/e0801b68c82cbabed47a7801b19935e2.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="11"><img src="./lifestyle-photos/fa1cd01944e5cc72d6bd3790ba722425.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="12"><img src="./lifestyle-photos/微信图片_20260215215833_538_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="13"><img src="./lifestyle-photos/微信图片_20260215215839_540_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="14"><img src="./lifestyle-photos/微信图片_20260215215844_542_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="15"><img src="./lifestyle-photos/微信图片_20260215215847_543_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="16"><img src="./lifestyle-photos/微信图片_20260215215848_544_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="17"><img src="./lifestyle-photos/微信图片_20260215215853_546_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="18"><img src="./lifestyle-photos/微信图片_20260215215856_547_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="19"><img src="./lifestyle-photos/微信图片_20260215215900_548_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="20"><img src="./lifestyle-photos/微信图片_20260215215903_549_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="21"><img src="./lifestyle-photos/微信图片_20260215215905_550_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="22"><img src="./lifestyle-photos/微信图片_20260215215908_551_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="23"><img src="./lifestyle-photos/微信图片_20260215215911_552_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="24"><img src="./lifestyle-photos/微信图片_20260215220028_582_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="25"><img src="./lifestyle-photos/微信图片_20260215220035_584_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="26"><img src="./lifestyle-photos/微信图片_20260215220038_585_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="27"><img src="./lifestyle-photos/微信图片_20260215220111_594_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="28"><img src="./lifestyle-photos/微信图片_20260215220119_595_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="29"><img src="./lifestyle-photos/微信图片_20260215220120_596_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="30"><img src="./lifestyle-photos/微信图片_20260215220122_597_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="31"><img src="./lifestyle-photos/微信图片_20260215220134_598_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="32"><img src="./lifestyle-photos/微信图片_20260215220136_599_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="33"><img src="./lifestyle-photos/微信图片_20260215235257_921_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="34"><img src="./lifestyle-photos/微信图片_20260215235302_922_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="35"><img src="./lifestyle-photos/微信图片_20260215235307_923_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="36"><img src="./lifestyle-photos/微信图片_20260215235311_925_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="37"><img src="./lifestyle-photos/微信图片_20260215235724_928_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="38"><img src="./lifestyle-photos/微信图片_20260215235733_930_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="39"><img src="./lifestyle-photos/微信图片_20260215235735_931_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="40"><img src="./lifestyle-photos/微信图片_20260215235735_932_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="41"><img src="./lifestyle-photos/微信图片_20260215235800_950_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="42"><img src="./lifestyle-photos/微信图片_20260215235808_954_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="43"><img src="./lifestyle-photos/微信图片_20260215235818_957_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="44"><img src="./lifestyle-photos/微信图片_20260215235942_977_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="45"><img src="./lifestyle-photos/微信图片_20260215235946_979_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="46"><img src="./lifestyle-photos/微信图片_20260215235949_981_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="47"><img src="./lifestyle-photos/微信图片_20260215235952_982_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="48"><img src="./lifestyle-photos/微信图片_20260215235955_984_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="49"><img src="./lifestyle-photos/微信图片_20260215235956_986_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="50"><img src="./lifestyle-photos/微信图片_20260215235959_987_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="51"><img src="./lifestyle-photos/微信图片_20260216000001_988_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="52"><img src="./lifestyle-photos/微信图片_20260216000010_995_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="53"><img src="./lifestyle-photos/微信图片_20260216000013_997_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="54"><img src="./lifestyle-photos/微信图片_20260216000024_1004_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="55"><img src="./lifestyle-photos/微信图片_20260216000026_1005_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="56"><img src="./lifestyle-photos/微信图片_20260216000027_1007_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="57"><img src="./lifestyle-photos/微信图片_20260216000136_1009_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="58"><img src="./lifestyle-photos/微信图片_20260216000138_1010_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="59"><img src="./lifestyle-photos/微信图片_20260216000141_1011_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="60"><img src="./lifestyle-photos/微信图片_20260216000144_1012_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="61"><img src="./lifestyle-photos/微信图片_20260216000201_1019_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="62"><img src="./lifestyle-photos/微信图片_20260216000209_1021_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="63"><img src="./lifestyle-photos/微信图片_20260216000210_1022_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="64"><img src="./lifestyle-photos/微信图片_20260216000215_1026_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="65"><img src="./lifestyle-photos/微信图片_20260216000217_1028_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="66"><img src="./lifestyle-photos/微信图片_20260216000220_1031_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="67"><img src="./lifestyle-photos/微信图片_20260216000221_1032_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="68"><img src="./lifestyle-photos/微信图片_20260216000225_1035_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="69"><img src="./lifestyle-photos/微信图片_20260217004203_1103_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="70"><img src="./lifestyle-photos/微信图片_20260217004210_1104_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="71"><img src="./lifestyle-photos/微信图片_20260217004236_1105_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="72"><img src="./lifestyle-photos/微信图片_20260217004303_1106_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="73"><img src="./lifestyle-photos/微信图片_20260217004346_1108_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="74"><img src="./lifestyle-photos/微信图片_20260217004351_1109_550.jpg" alt="Lifestyle"></div>
+            <div class="lifestyle-item hidden-item" data-index="75"><img src="./lifestyle-photos/微信图片_20260217004355_1110_550.jpg" alt="Lifestyle"></div>
+        </div>
+        <div class="expand-btn-container">
+            <button class="expand-btn" id="lifestyleExpandBtn" onclick="toggleSection('lifestyle')">
+                <span class="icon">+</span>
+                <span class="text" data-i18n="expand.expand">展开 / Expand</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3 class="font-serif" data-i18n="contact.title">Let's Create<br>Together</h3>
+                <div class="contact-item">
+                    <div class="contact-label" data-i18n="contact.email">Email</div>
+                    <div class="contact-value">modelheiko@163.com</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label" data-i18n="contact.xiaohongshu">Xiaohongshu</div>
+                    <div class="contact-value">@-Heiko</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-label" data-i18n="contact.instagram">Instagram</div>
+                    <div class="contact-value">heiko_nn</div>
+                </div>
+            </div>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder=" " required>
+                    <label for="name" data-i18n="form.name">Your Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder=" " required>
+                    <label for="email" data-i18n="form.email">Email Address</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="subject" placeholder=" ">
+                    <label for="subject" data-i18n="form.subject">Subject</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" rows="4" placeholder=" "></textarea>
+                    <label for="message" data-i18n="form.message">Message</label>
+                </div>
+                <button type="submit" class="submit-btn" data-i18n="form.submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand font-serif">HEIKO</div>
+        <div class="footer-links">
+            <a href="#" data-i18n="footer.instagram">Instagram</a>
+            <a href="#" data-i18n="footer.xiaohongshu">Xiaohongshu</a>
+        </div>
+        <div class="footer-copy">© 2026 Heiko Model</div>
+    </footer>
+
+    <script>
+        // 多语言配置
+        const i18n = {
+            zh: {
+                nav: { about: '简介', works: '作品', creative: '合作创作', life: '花絮', lifestyle: '生活', contact: '联系' },
+                hero: { label: 'Model Portfolio', subtitle: '', location: 'BEIJING Based', available: 'Available Worldwide', role1: 'Model', role2: 'Artist', since: 'Since 2022' },
+                about: { label: '个人简介', name: '王雪宁', text1: '身高 173cm，从事专业模特工作已有四年。毕业于TAFA油画系，BIFT研究生在读。', text2: '', stat1: 'Height / CM', stat2: 'Measurements', stat3: 'Shoe Size' },
+                snap: { title: 'Snap / Street Style' },
+                works: { title: 'Selected Works', tab: { all: '全部', commercial: '商拍', wedding: '婚样' } },
+                creative: { title: '合作创作 / Collaboration', hint: 'Scroll to explore · Click to view' },
+                lifestyle: { title: '生活照 / Daily Life' },
+                life: { title: 'Behind<br>the Scenes', subtitle: '' },
+                expand: { expand: '展开 / Expand', collapse: '折叠 / Collapse' },
+                contact: { title: "Let's Create<br>Together", email: 'Email', xiaohongshu: 'Xiaohongshu', instagram: 'Instagram' },
+                form: { name: 'Your Name', email: 'Email Address', subject: 'Subject', message: 'Message', submit: 'Send Message' },
+                modal: { brand: 'Brand' },
+                footer: { instagram: 'Instagram', xiaohongshu: 'Xiaohongshu' }
+            },
+            en: {
+                nav: { about: 'About', works: 'Works', creative: 'Creative', life: 'BTS', lifestyle: 'Daily', contact: 'Contact' },
+                hero: { label: 'Model Portfolio', subtitle: '', location: 'BEIJING Based', available: 'Available Worldwide', role1: 'Model', role2: 'Artist', since: 'Since 2022' },
+                about: { label: 'About Me', name: 'Wang Xuening', text1: 'Height 173cm, 4 years of professional modeling. BFA in Oil Painting from TAFA, currently MFA candidate at BIFT.', text2: '', stat1: 'Height / CM', stat2: 'Measurements', stat3: 'Shoe Size' },
+                snap: { title: 'Snap / Street Style' },
+                works: { title: 'Selected Works', tab: { all: 'All', commercial: 'Commercial', wedding: 'Wedding' } },
+                creative: { title: 'Collaboration', hint: 'Scroll to explore · Click to view' },
+                lifestyle: { title: 'Daily Life' },
+                life: { title: 'Behind<br>the Scenes', subtitle: '' },
+                expand: { expand: 'Expand', collapse: 'Collapse' },
+                contact: { title: "Let's Create<br>Together", email: 'Email', xiaohongshu: 'Xiaohongshu', instagram: 'Instagram' },
+                form: { name: 'Your Name', email: 'Email Address', subject: 'Subject', message: 'Message', submit: 'Send Message' },
+                modal: { brand: 'Brand' },
+                footer: { instagram: 'Instagram', xiaohongshu: 'Xiaohongshu' }
+            }
+        };
+
+        let currentLang = 'zh';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const texts = i18n[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const value = getNestedValue(texts, key);
+                if (value) {
+                    if (value.includes('<')) {
+                        el.innerHTML = value;
+                    } else {
+                        el.textContent = value;
+                    }
+                }
+            });
+        }
+
+        function getNestedValue(obj, path) {
+            return path.split('.').reduce((current, key) => current && current[key], obj);
+        }
+
+        // 项目数据
+        const projectData = {
+            lacuna25aw: {
+                title: "LacunaMonologue",
+                category: "commercial",
+                year: "2025",
+                season: "AW",
+                client: "LacunaMonologue",
+                description: "LacunaMonologue 2025秋冬系列。",
+                thumbnail: "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213755_150_550.jpg",
+                campaign: [
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213755_150_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213758_151_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213800_152_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213802_153_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213810_157_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213814_159_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213816_160_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213818_161_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213821_162_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213823_163_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213825_164_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213828_165_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213831_166_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213833_167_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213836_168_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213839_169_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213841_171_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213844_172_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213846_173_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213848_174_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-Campaign-2025AW/微信图片_20260215213855_176_550.jpg"
+                ],
+                lookbook: [
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213915_181_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213921_182_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213924_183_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213928_184_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213931_185_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213938_187_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213941_188_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213944_189_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213947_190_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213950_191_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215213952_192_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214000_194_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214004_195_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214007_196_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214011_197_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214013_198_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214018_199_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214022_200_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214024_201_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214027_202_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214030_203_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214034_204_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214036_205_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214039_206_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214043_207_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214045_208_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214047_209_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214051_210_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214053_211_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214059_212_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214103_213_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214105_214_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214108_215_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214114_216_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214120_217_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214123_218_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214126_219_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214132_220_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214134_221_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214140_222_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214143_223_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214147_224_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214154_225_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214157_227_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214159_228_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214200_229_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214202_230_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214209_231_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214213_233_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214214_234_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214224_236_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214225_237_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214228_239_550.jpg",
+                    "./LacunaMonologue-2025AW/LacunaMonologue-LookBook-2025AW/微信图片_20260215214230_240_550.jpg"
+                ]
+            },
+            lacuna26ss: {
+                title: "LacunaMonologue",
+                category: "commercial",
+                year: "2026",
+                season: "SS",
+                client: "LacunaMonologue",
+                description: "LacunaMonologue 2026春夏系列。",
+                thumbnail: "./LacunaMonologue-2026SS/LacunaMonologue-LookBook-2026SS/9cdeec6a4ea07914cf79a3926bdade16.jpg",
+                campaign: [],
+                lookbook: [
+                    "./LacunaMonologue-2026SS/LacunaMonologue-LookBook-2026SS/9cdeec6a4ea07914cf79a3926bdade16.jpg",
+                    "./LacunaMonologue-2026SS/LacunaMonologue-LookBook-2026SS/efedc0ad9ddaffdfb74fe18499bf7023.jpg"
+                ]
+            },
+            joepheee: {
+                title: "JOEPHEEE",
+                category: "commercial",
+                year: "2025",
+                season: "SS",
+                client: "JOEPHEEE",
+                description: "JOEPHEEE 2025春夏系列。",
+                thumbnail: "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260215220330_627_550.jpg",
+                campaign: [
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260215220330_627_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260215220420_639_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122126_8042_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122129_8043_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122132_8044_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122134_8045_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122137_8046_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122140_8047_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122143_8048_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122146_8049_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122149_8050_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122158_8051_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122201_8052_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122204_8053_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122206_8054_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122209_8055_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122212_8056_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122215_8057_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122218_8058_752.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEECampaign-2025SS/微信图片_20260216122221_8059_752.jpg"
+                ],
+                lookbook: [
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215215053_364_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215215055_365_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215215058_366_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220140_600_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220148_601_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220152_602_550.png",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220154_603_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220157_604_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220159_605_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220207_606_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220209_607_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220214_609_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220217_610_550.jpg",
+                    "./JOEPHEEE-2025SS/JOEPHEEELookBook-2025SS/微信图片_20260215220219_611_550.jpg"
+                ]
+            },
+            nooduu: {
+                title: "NOODUU",
+                category: "commercial",
+                year: "2022",
+                season: "SS",
+                client: "NOODUU",
+                description: "NOODUU 2022春夏系列。",
+                thumbnail: "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215420_452_550.jpg",
+                campaign: [
+                    "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215420_452_550.jpg",
+                    "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215421_453_550.jpg",
+                    "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215422_454_550.jpg",
+                    "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215423_456_550.jpg"
+                ],
+                lookbook: []
+            },
+            mulike: {
+                title: "MUUL",
+                category: "commercial",
+                year: "2024",
+                season: "Brand",
+                client: "MUUL",
+                description: "MUUL品牌Campaign。",
+                thumbnail: "./MUUL/Shot/7451045fdf7c5ef8ab9e5f93a6b9bd29.jpg",
+                campaign: [
+                    "./MUUL/Shot/7451045fdf7c5ef8ab9e5f93a6b9bd29.jpg",
+                    "./MUUL/Shot/8b5b6769cf21f760879c55dbe7c3d8b3.jpg",
+                    "./MUUL/Shot/fd006fa65f8a9003b2aaeedbfdb6eee5.jpg"
+                ],
+                lookbook: []
+            },
+            lalpina: {
+                title: "LALPINA",
+                category: "commercial",
+                year: "2022",
+                season: "SS",
+                client: "LALPINA",
+                description: "LALPINA-2022",
+                thumbnail: "./LALPINA-2022/0fc50a156b975565a68860bfbc781033.jpg",
+                campaign: [
+                    "./LALPINA-2022/0fc50a156b975565a68860bfbc781033.jpg",
+                    "./LALPINA-2022/644533430352fb630f2a9a1199fa7b8c.jpg",
+                    "./LALPINA-2022/77f86d9f87a11b9bbaa1acf966034ef8.jpg",
+                    "./LALPINA-2022/d9dae2dac092a00d372c1e094d7578be.jpg",
+                    "./LALPINA-2022/f110eb2777de101618b928b3d844c17b.jpg"
+                ],
+                lookbook: []
+            },
+            eralnc: {
+                title: "Eral.nc",
+                category: "commercial",
+                year: "2022",
+                season: "SS",
+                client: "Eral.nc",
+                description: "Eral-nc-2022",
+                thumbnail: "./Eral-nc-2022/微信图片_20260217003520_8326_752.jpg",
+                campaign: [
+                    "./Eral-nc-2022/d1ff23be3dfef9709e00c0e87de27b5a.mp4",
+                    "./Eral-nc-2022/微信图片_20260217003520_8326_752.jpg"
+                ],
+                lookbook: []
+            },
+            yichun: {
+                title: "以纯",
+                category: "commercial",
+                year: "2021",
+                season: "SS",
+                client: "以纯",
+                description: "YISHION-2021SS",
+                thumbnail: "./YISHION-2021SS/微信图片_20260217000404_669_990.jpg",
+                campaign: [
+                    "./YISHION-2021SS/微信图片_20260217000404_669_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000405_670_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000406_671_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000408_673_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000410_674_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000411_675_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000414_676_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000415_677_990.jpg",
+                    "./YISHION-2021SS/微信图片_20260217000416_678_990.jpg"
+                ],
+                lookbook: []
+            },
+            wedding8: {
+                title: "宴会厅",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 宴会厅",
+                thumbnail: "./wedding/宴会厅/cover.jpg",
+                images: [
+                    "./wedding/宴会厅/89c92fa4a8618e5a0da3e9efb2f23b93.mp4",
+                    "./wedding/宴会厅/c8eb146bec3f5bcc2c799c5bd0d2bc3c.mp4"
+                ]
+            },
+            wedding1: {
+                title: "Purple",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 Purple",
+                thumbnail: "./wedding/Purple/微信图片_20260215215552_481_550.jpg",
+                images: [
+                    "./wedding/Purple/8714a0381e54dcd884b86bc34ff66b05.mp4",
+                    "./wedding/Purple/微信图片_20260215215552_481_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215555_482_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215559_483_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215605_484_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215610_485_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215617_486_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215624_487_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215628_488_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215634_489_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215637_490_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215641_491_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215644_492_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215647_493_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215653_495_550.jpg",
+                    "./wedding/Purple/微信图片_20260215215657_496_550.jpg",
+                    "./wedding/Purple/微信图片_20260215231113_691_550.jpg",
+                    "./wedding/Purple/微信图片_20260215231137_692_550.jpg",
+                    "./wedding/Purple/微信图片_20260215231153_693_550.jpg"
+                ]
+            },
+            wedding2: {
+                title: "茶恋",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 茶恋",
+                thumbnail: "./wedding/茶恋/微信图片_20260215215021_337_550.jpg",
+                images: [
+                    "./wedding/茶恋/2c772b3be19d72331c2a76aefe4e97c8.mp4",
+                    "./wedding/茶恋/41c6bbe7e16bc6d4f939fb6968f5ad6b.mp4",
+                    "./wedding/茶恋/6fe7031f266f916d93d271ef6d886243.mp4",
+                    "./wedding/茶恋/faa98d0321de3047e109432539c8a8cd.mp4",
+                    "./wedding/茶恋/微信图片_20260215215021_337_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215023_339_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215024_341_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215026_344_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215028_345_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215030_347_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215031_349_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215033_350_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215046_359_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215047_360_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215049_361_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215050_362_550.jpg",
+                    "./wedding/茶恋/微信图片_20260215215107_372_550.jpg"
+                ]
+            },
+            wedding3: {
+                title: "复古舞厅",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 复古舞厅",
+                thumbnail: "./wedding/复古舞厅/490886132796419e95ff792d82046c28.jpg",
+                images: [
+                    "./wedding/复古舞厅/490886132796419e95ff792d82046c28.jpg",
+                    "./wedding/复古舞厅/7479546c0128c6454dd9400692a246dd.jpg",
+                    "./wedding/复古舞厅/9315208f3f22c078c573a2e0b5a8a4cb.jpg",
+                    "./wedding/复古舞厅/e0356c4eb05f9f9752b5831694566417.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214838_299_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214841_300_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214848_301_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214852_302_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214857_303_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214902_304_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214905_305_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214912_306_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214930_307_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214932_308_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214935_309_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214937_310_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214941_311_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214945_312_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214947_313_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214949_314_550.jpg",
+                    "./wedding/复古舞厅/微信图片_20260215214951_315_550.jpg"
+                ]
+            },
+            wedding4: {
+                title: "摩登皮古典骨",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 摩登皮古典骨",
+                thumbnail: "./wedding/摩登皮古典骨/1a60fb16b82d1adf78f0e732d653f952.jpg",
+                images: [
+                    "./wedding/摩登皮古典骨/1a60fb16b82d1adf78f0e732d653f952.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215447_470_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215453_471_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215458_472_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215509_473_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215513_474_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215525_475_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215528_476_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215533_477_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215539_478_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215543_479_550.jpg",
+                    "./wedding/摩登皮古典骨/微信图片_20260215215547_480_550.jpg"
+                ]
+            },
+            wedding5: {
+                title: "日系",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 日系",
+                thumbnail: "./wedding/日系/7de52eb72207eb18871765a36d8c4757.jpg",
+                images: [
+                    "./wedding/日系/7de52eb72207eb18871765a36d8c4757.jpg",
+                    "./wedding/日系/8181836c7f272bff2fcce8a20a4c3c49.jpg",
+                    "./wedding/日系/b0c92d07e4b45ad6525b6cd25cffd17e.jpg",
+                    "./wedding/日系/da5ae5533255f048cf22ec07ecce658b.jpg",
+                    "./wedding/日系/e17b1c2296c2ed4cef2526cee77a158a.jpg",
+                    "./wedding/日系/微信图片_20260215214952_316_550.jpg",
+                    "./wedding/日系/微信图片_20260215214954_317_550.jpg",
+                    "./wedding/日系/微信图片_20260215214956_318_550.jpg",
+                    "./wedding/日系/微信图片_20260215214958_319_550.jpg",
+                    "./wedding/日系/微信图片_20260215215001_320_550.jpg",
+                    "./wedding/日系/微信图片_20260215215004_321_550.jpg",
+                    "./wedding/日系/微信图片_20260215215013_329_550.jpg",
+                    "./wedding/日系/微信图片_20260215215015_330_550.jpg",
+                    "./wedding/日系/微信图片_20260215215017_331_550.jpg",
+                    "./wedding/日系/微信图片_20260215215024_342_550.jpg",
+                    "./wedding/日系/微信图片_20260215215026_343_550.jpg",
+                    "./wedding/日系/微信图片_20260215215028_346_550.jpg",
+                    "./wedding/日系/微信图片_20260215231159_694_550.jpg",
+                    "./wedding/日系/微信图片_20260215231207_695_550.jpg",
+                    "./wedding/日系/微信图片_20260215231215_696_550.jpg"
+                ]
+            },
+            wedding6: {
+                title: "图多盖洛",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 图多盖洛",
+                thumbnail: "./wedding/图多盖洛/微信图片_20260215214611_254_550.jpg",
+                images: [
+                    "./wedding/图多盖洛/微信图片_20260215214611_254_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214618_256_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214621_257_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214624_258_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214627_259_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214630_260_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214634_261_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214637_262_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214639_263_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214641_264_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214645_265_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214656_268_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214700_269_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214702_270_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214705_271_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214710_272_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214712_273_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214716_275_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214721_277_550.jpg",
+                    "./wedding/图多盖洛/微信图片_20260215214723_278_550.jpg"
+                ]
+            },
+            wedding7: {
+                title: "县城文学",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 县城文学",
+                thumbnail: "./wedding/县城文学/a26665edb3343bffce6970787458c7f0.jpg",
+                images: [
+                    "./wedding/县城文学/a26665edb3343bffce6970787458c7f0.jpg",
+                    "./wedding/县城文学/微信图片_20260215231405_707_550.jpg",
+                    "./wedding/县城文学/微信图片_20260215231412_708_550.jpg",
+                    "./wedding/县城文学/微信图片_20260215231427_709_550.jpg",
+                    "./wedding/县城文学/微信图片_20260215231440_710_550.jpg",
+                    "./wedding/县城文学/微信图片_20260215231455_711_550.jpg",
+                    "./wedding/县城文学/微信图片_20260215231506_712_550.jpg",
+                    "./wedding/县城文学/微信图片_20260216161320_8103_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161324_8104_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161326_8105_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161329_8106_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161332_8107_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161334_8108_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161337_8109_752.jpg",
+                    "./wedding/县城文学/微信图片_20260216161340_8110_750.jpg"
+                ]
+            },
+            wedding9: {
+                title: "姻果",
+                category: "wedding",
+                client: "Wedding",
+                description: "婚样作品 姻果",
+                thumbnail: "./wedding/姻果/微信图片_20260215215040_353_550.jpg",
+                images: [
+                    "./wedding/姻果/a25827118ca23f8199a7056b38779940.mp4",
+                    "./wedding/姻果/fade0b6158190f05c0f4b8946ee4b136.mp4",
+                    "./wedding/姻果/微信图片_20260215215040_353_550.jpg",
+                    "./wedding/姻果/微信图片_20260215215043_356_550.jpg",
+                    "./wedding/姻果/微信图片_20260215215044_357_550.jpg",
+                    "./wedding/姻果/微信图片_20260216162850_8111_752.jpg",
+                    "./wedding/姻果/微信图片_20260216162852_8112_752.jpg",
+                    "./wedding/姻果/微信图片_20260216162853_8113_752.jpg"
+                ]
+            }
+        };
+
+        // 合作创作项目数据
+        const collaborationProjects = [
+            {
+                id: 'y2k',
+                title: 'Y2K',
+                thumbnail: './creative-works/y2k/b9ca5e088dd24772107123dcc5c196ab.jpg',
+                images: [
+                    './creative-works/y2k/b9ca5e088dd24772107123dcc5c196ab.jpg',
+                    './creative-works/y2k/微信图片_20260215215444_469_550.jpg',
+                    './creative-works/y2k/微信图片_20260215215741_514_550.jpg',
+                    './creative-works/y2k/微信图片_20260215215742_515_550.jpg',
+                    './creative-works/y2k/微信图片_20260215215744_516_550.jpg',
+                    './creative-works/y2k/微信图片_20260215233833_908_550.jpg',
+                    './creative-works/y2k/微信图片_20260215233838_912_550.jpg',
+                    './creative-works/y2k/微信图片_20260215233839_913_550.jpg'
+                ]
+            },
+            {
+                id: 'olympic',
+                title: 'Olympic',
+                thumbnail: './creative-works/奥运/23f5fb824e3342ba1bba60a7c59a522f.jpg',
+                images: [
+                    './creative-works/奥运/23f5fb824e3342ba1bba60a7c59a522f.jpg',
+                    './creative-works/奥运/84b4308bdd71c6c82dcf5308c804b759.jpg',
+                    './creative-works/奥运/9d45afe4a5a5161770cae292d64ce7a2.jpg',
+                    './creative-works/奥运/9ef935e839e6e6df3d874db555894ff71.jpg',
+                    './creative-works/奥运/cc063cbe2cf8a6855e08a2bb8eb5dcfc.jpg',
+                    './creative-works/奥运/微信图片_20260215215142_393_550.jpg',
+                    './creative-works/奥运/微信图片_20260215215143_395_550.jpg',
+                    './creative-works/奥运/微信图片_20260215215145_398_550.jpg',
+                    './creative-works/奥运/微信图片_20260215215146_399_550.jpg',
+                    './creative-works/奥运/微信图片_20260215215149_400_550.png',
+                    './creative-works/奥运/微信图片_20260215215150_401_550.jpg',
+                    './creative-works/奥运/微信图片_20260215215157_406_550.png',
+                    './creative-works/奥运/微信图片_20260215215200_407_550.png',
+                    './creative-works/奥运/微信图片_20260215215204_410_550.png',
+                    './creative-works/奥运/微信图片_20260215215212_416_550.png'
+                ]
+            },
+            {
+                id: 'genesis',
+                title: 'Genesis',
+                thumbnail: './creative-works/创世纪/aa5bf47d195a360a772275b0fb6b9ecd.jpg',
+                images: [
+                    './creative-works/创世纪/aa5bf47d195a360a772275b0fb6b9ecd.jpg',
+                    './creative-works/创世纪/ae0d641c3cf303988446a02a0dbd15b2.jpg'
+                ]
+            },
+            {
+                id: 'dunhuang',
+                title: '敦煌（学生毕设）',
+                thumbnail: './creative-works/敦煌（学生毕设）/17f91697bcdcf593c2343d7df63b593d.jpg',
+                images: [
+                    './creative-works/敦煌（学生毕设）/17f91697bcdcf593c2343d7df63b593d.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215757_528_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215804_529_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215808_530_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215812_531_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215815_532_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215818_533_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215821_534_550.jpg',
+                    './creative-works/敦煌（学生毕设）/微信图片_20260215215824_535_550.jpg'
+                ]
+            },
+            {
+                id: 'retro',
+                title: '复古大头',
+                thumbnail: './creative-works/复古大头/微信图片_20260215233825_901_550.jpg',
+                images: [
+                    './creative-works/复古大头/微信图片_20260215233825_901_550.jpg',
+                    './creative-works/复古大头/微信图片_20260215233827_902_550.jpg',
+                    './creative-works/复古大头/微信图片_20260215233829_904_550.jpg',
+                    './creative-works/复古大头/微信图片_20260215233831_906_550.jpg',
+                    './creative-works/复古大头/微信图片_20260215233832_907_550.jpg'
+                ]
+            },
+            {
+                id: 'coast',
+                title: 'Coast',
+                thumbnail: './creative-works/海边/f5b4cf41597a08388ede973b2669db41.jpg',
+                images: [
+                    './creative-works/海边/f5b4cf41597a08388ede973b2669db41.jpg',
+                    './creative-works/海边/微信图片_20260215215949_567_550.jpg',
+                    './creative-works/海边/微信图片_20260215215952_568_550.jpg',
+                    './creative-works/海边/微信图片_20260215215954_569_550.jpg',
+                    './creative-works/海边/微信图片_20260215215957_570_550.jpg',
+                    './creative-works/海边/微信图片_20260215220000_571_550.jpg',
+                    './creative-works/海边/微信图片_20260215220003_572_550.jpg',
+                    './creative-works/海边/微信图片_20260215220005_573_550.jpg',
+                    './creative-works/海边/微信图片_20260215220008_574_550.jpg'
+                ]
+            },
+            {
+                id: 'lotus',
+                title: 'Lotus leaf',
+                thumbnail: './creative-works/荷叶/5a88b287d212a262b990d6a97b1defa2.jpg',
+                images: [
+                    './creative-works/荷叶/5a88b287d212a262b990d6a97b1defa2.jpg',
+                    './creative-works/荷叶/82eeaaba29a5e6569eb2f78316bda8df.jpg',
+                    './creative-works/荷叶/afe02a41fec1005197e0d1399ae0412d.jpg',
+                    './creative-works/荷叶/ea59c974ec4fdbeca113bbd12eb7365b.jpg'
+                ]
+            },
+            {
+                id: 'green',
+                title: 'Green',
+                thumbnail: './creative-works/绿色/微信图片_20260215215242_427_550.jpg',
+                images: [
+                    './creative-works/绿色/微信图片_20260215215242_427_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215252_429_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215300_431_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215308_434_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215316_437_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215328_439_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215335_440_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215342_441_550.jpg',
+                    './creative-works/绿色/微信图片_20260215215348_442_550.jpg'
+                ]
+            },
+            {
+                id: 'green-student',
+                title: '绿色（学生毕设）',
+                thumbnail: './creative-works/绿色（学生毕设）/微信图片_20260215215913_553_550.jpg',
+                images: [
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215913_553_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215916_554_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215918_555_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215920_556_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215922_557_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215925_558_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215926_559_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215929_560_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215931_561_550.jpg',
+                    './creative-works/绿色（学生毕设）/微信图片_20260215215933_562_550.jpg'
+                ]
+            },
+            {
+                id: 'suit',
+                title: 'Suit',
+                thumbnail: './creative-works/西装/07867b8d6c3a5a4d5b273441162dd301.jpg',
+                images: [
+                    './creative-works/西装/07867b8d6c3a5a4d5b273441162dd301.jpg',
+                    './creative-works/西装/2481157f3954483aabf8ba3089f33504.jpg',
+                    './creative-works/西装/5294131fcc8c9c876b79ba8c1607e1cc.jpg',
+                    './creative-works/西装/bfe7f361d6fd3395c8d5c2a41f3a66c1.jpg'
+                ]
+            },
+            {
+                id: 'neochinese',
+                title: 'Neo-Chinese Style',
+                thumbnail: './creative-works/新中式大头/974972b54a30d5d250becb9f4c630c2d.jpg',
+                images: [
+                    './creative-works/新中式大头/974972b54a30d5d250becb9f4c630c2d.jpg',
+                    './creative-works/新中式大头/b2e1ba8920b03b1dafb383c3e3df06fb.jpg',
+                    './creative-works/新中式大头/d419dbb3516f876aa848f24532adc053.jpg',
+                    './creative-works/新中式大头/f174099c89a69365ba6bd360bb8f80f8.jpg',
+                    './creative-works/新中式大头/微信图片_20260215215752_525_550.jpg',
+                    './creative-works/新中式大头/微信图片_20260215215752_526_550.jpg',
+                    './creative-works/新中式大头/微信图片_20260215215753_527_550.jpg',
+                    './creative-works/新中式大头/微信图片_20260215233828_903_550.jpg'
+                ]
+            },
+            {
+                id: 'neochinese-green',
+                title: 'Neo-Chinese Style（Green）',
+                thumbnail: './creative-works/新中式绿色/c819863c027bcad836a156984c8b02d5.jpg',
+                images: [
+                    './creative-works/新中式绿色/c819863c027bcad836a156984c8b02d5.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215734_507_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215735_508_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215736_509_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215738_510_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215739_511_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215746_518_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215747_519_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215747_520_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215748_521_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215749_522_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215750_523_550.jpg',
+                    './creative-works/新中式绿色/微信图片_20260215215751_524_550.jpg'
+                ]
+            },
+            {
+                id: 'asphyxia',
+                title: 'Asphyxia',
+                thumbnail: './creative-works/窒息/微信图片_20260215215708_499_550.jpg',
+                images: [
+                    './creative-works/窒息/e544e594152bd06bdbce341a0212f24b.mp4',
+                    './creative-works/窒息/微信图片_20260215215708_499_550.jpg',
+                    './creative-works/窒息/微信图片_20260215215711_500_550.jpg',
+                    './creative-works/窒息/微信图片_20260215215716_501_550.jpg',
+                    './creative-works/窒息/微信图片_20260215215720_503_550.jpg',
+                    './creative-works/窒息/微信图片_20260215215729_505_550.jpg',
+                    './creative-works/窒息/微信图片_20260215215733_506_550.jpg'
+                ]
+            },
+            {
+                id: 'purple',
+                title: 'Purple',
+                thumbnail: './creative-works/紫色/2f77c2a2d1131d968e21a63aecbf01d7.jpg',
+                images: [
+                    './creative-works/紫色/2f77c2a2d1131d968e21a63aecbf01d7.jpg',
+                    './creative-works/紫色/4cb4a1ed790e0e251d31d160fd4962f4.jpg',
+                    './creative-works/紫色/aaf87ae90030622ad8c3c60a1efb9c13.jpg',
+                    './creative-works/紫色/bc0e84b11275c234be34c9626b1577bb.jpg',
+                    './creative-works/紫色/bce37667c2cc3ac9b5e23fed4f845c10.jpg',
+                    './creative-works/紫色/f82081f5bb62e743dc8e233ca309ba1f.jpg'
+                ]
+            },
+            {
+                id: 'tianjin-eye',
+                title: 'Tianjin Eye',
+                thumbnail: './creative-works/天津之眼.jpg',
+                images: []
+            },
+            {
+                id: 'xiaoqing',
+                title: 'Xiao-qing',
+                thumbnail: './creative-works/小青.jpg',
+                images: []
+            },
+            {
+                id: 'film',
+                title: 'film',
+                thumbnail: './creative-works/胶片/0fd4e32a5d2b11d75fbfeba806b2b3e7.jpg',
+                images: [
+                    './creative-works/胶片/0fd4e32a5d2b11d75fbfeba806b2b3e7.jpg',
+                    './creative-works/胶片/350c0960766943d6d0457683b4a83e29.jpg'
+                ]
+            }
+        ];
+
+        let currentLightboxImages = [];
+        let currentLightboxIndex = 0;
+        let currentCollabProject = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProjectCards();
+            renderCollaborationGrid();
+            initTabs();
+            initExpandSections();
+        });
+
+        function initExpandSections() {
+            // Initialize life section - hide items beyond first 4
+            const lifeGrid = document.getElementById('lifeGrid');
+            if (lifeGrid) {
+                const lifeItems = lifeGrid.querySelectorAll('.life-item');
+                lifeItems.forEach((item, index) => {
+                    if (index >= 4) {
+                        item.classList.add('hidden-item');
+                    }
+                });
+            }
+            
+            // Initialize lifestyle section - hide items beyond first 4
+            const lifestyleGrid = document.getElementById('lifestyleGrid');
+            if (lifestyleGrid) {
+                const lifestyleItems = lifestyleGrid.querySelectorAll('.lifestyle-item');
+                lifestyleItems.forEach((item, index) => {
+                    if (index >= 4) {
+                        item.classList.add('hidden-item');
+                    }
+                });
+            }
+        }
+
+        function renderProjectCards() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+            Object.entries(projectData).forEach(([key, project]) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.dataset.category = project.category;
+                card.dataset.project = key;
+                const seasonHtml = project.category === 'wedding' ? '' : `<div class="project-season">${project.year || ''} ${project.season || ''}</div>`;
+                card.innerHTML = `
+                    <div class="project-thumbnail">
+                        <img src="${project.thumbnail}" alt="${project.title}" onerror="this.src='https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80'">
+                        <div class="project-overlay">
+                            <div class="view-btn">View</div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">${project.category === 'commercial' ? 'Commercial' : project.category === 'wedding' ? 'Wedding' : 'Creative'}</div>
+                        <h3 class="project-name">${project.title}</h3>
+                        ${seasonHtml}
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(key));
+                grid.appendChild(card);
+            });
+        }
+
+        function renderCollaborationGrid() {
+            const grid = document.getElementById('creativeGrid');
+            grid.innerHTML = '';
+            collaborationProjects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'creative-project-card';
+                card.dataset.projectId = project.id;
+                card.innerHTML = `
+                    <div class="creative-project-thumbnail">
+                        <img src="${project.thumbnail}" alt="${project.title}" onerror="this.src='https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80'">
+                        <div class="creative-project-overlay">
+                            <div class="view-btn">View</div>
+                        </div>
+                    </div>
+                    <div class="creative-project-info">
+                        <h3 class="creative-project-name">${project.title}</h3>
+                    </div>
+                `;
+                card.addEventListener('click', () => openCollabModal(project));
+                grid.appendChild(card);
+            });
+        }
+
+        function openCollabModal(project) {
+            currentCollabProject = project;
+            document.getElementById('modalCategory').textContent = 'Collaboration';
+            document.getElementById('modalTitle').textContent = project.title;
+            document.getElementById('modalSeason').textContent = '';
+            document.getElementById('modalDescription').textContent = '';
+            document.getElementById('modalClient').textContent = 'Collaboration Project';
+            const modalTabs = document.querySelector('.modal-tabs');
+            modalTabs.style.display = 'none';
+            updateCollabGallery();
+            document.getElementById('projectModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateCollabGallery() {
+            const container = document.getElementById('modalGalleryContent');
+            container.innerHTML = '';
+            const images = currentCollabProject.images || [];
+            const grid = document.createElement('div');
+            grid.className = 'gallery-grid';
+            if (images.length === 0) {
+                grid.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 3rem;">暂无图片</p>';
+            } else {
+                images.forEach((src, index) => {
+                    if (src.endsWith('.mp4') || src.endsWith('.mov')) {
+                        const video = document.createElement('video');
+                        video.controls = true;
+                        video.style.width = '100%';
+                        video.style.aspectRatio = '3/4';
+                        video.style.objectFit = 'cover';
+                        video.innerHTML = `<source src="${src}" type="video/mp4">`;
+                        grid.appendChild(video);
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.alt = 'Project Image';
+                        img.onerror = function() { this.style.display = 'none'; };
+                        img.onclick = () => openLightbox(images, index);
+                        grid.appendChild(img);
+                    }
+                });
+            }
+            container.appendChild(grid);
+        }
+
+        function initTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.dataset.filter;
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                            card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        let currentProject = null;
+        let currentTab = 'campaign';
+
+        function openModal(projectId) {
+            currentProject = projectData[projectId];
+            if (!currentProject) return;
+            document.getElementById('modalCategory').textContent = 
+                currentProject.category === 'commercial' ? 'Commercial' : 
+                currentProject.category === 'wedding' ? 'Wedding' : 'Creative';
+            document.getElementById('modalTitle').textContent = currentProject.title;
+            document.getElementById('modalSeason').textContent = currentProject.year && currentProject.season ? `${currentProject.year} ${currentProject.season}` : '';
+            document.getElementById('modalDescription').textContent = currentProject.description;
+            document.getElementById('modalClient').textContent = currentProject.client;
+            const modalTabs = document.querySelector('.modal-tabs');
+            if (currentProject.category === 'wedding') {
+                modalTabs.style.display = 'none';
+            } else {
+                modalTabs.style.display = 'flex';
+                currentTab = 'campaign';
+                document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+                document.querySelector('.modal-tab[data-tab="campaign"]').classList.add('active');
+            }
+            updateGallery();
+            document.getElementById('projectModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.modal-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentTab = tab.dataset.tab;
+                updateGallery();
+            });
+        });
+
+        function updateGallery() {
+            const container = document.getElementById('modalGalleryContent');
+            container.innerHTML = '';
+            let images;
+            if (currentProject.category === 'wedding') {
+                images = currentProject.images || [];
+            } else {
+                images = currentTab === 'campaign' ? currentProject.campaign : currentProject.lookbook;
+            }
+            const grid = document.createElement('div');
+            grid.className = 'gallery-grid';
+            images.forEach((src, index) => {
+                if (src.endsWith('.mp4') || src.endsWith('.mov')) {
+                    const video = document.createElement('video');
+                    video.controls = true;
+                    video.style.width = '100%';
+                    video.style.aspectRatio = '3/4';
+                    video.style.objectFit = 'cover';
+                    video.innerHTML = `<source src="${src}" type="video/mp4">`;
+                    grid.appendChild(video);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = 'Project Image';
+                    img.onerror = function() { this.style.display = 'none'; };
+                    img.onclick = () => openLightbox(images, index);
+                    grid.appendChild(img);
+                }
+            });
+            container.appendChild(grid);
+        }
+
+        function openLightbox(images, index) {
+            currentLightboxImages = images.filter(src => !src.endsWith('.mp4') && !src.endsWith('.mov'));
+            currentLightboxIndex = currentLightboxImages.indexOf(images[index]);
+            if (currentLightboxIndex === -1) currentLightboxIndex = 0;
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function updateLightboxImage() {
+            const img = document.getElementById('lightboxImg');
+            img.src = currentLightboxImages[currentLightboxIndex];
+            document.getElementById('lightboxCounter').textContent = 
+                `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
+        }
+
+        function changeLightboxImage(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) currentLightboxIndex = currentLightboxImages.length - 1;
+            if (currentLightboxIndex >= currentLightboxImages.length) currentLightboxIndex = 0;
+            updateLightboxImage();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeLightbox();
+            }
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') changeLightboxImage(-1);
+                if (e.key === 'ArrowRight') changeLightboxImage(1);
+            }
+        });
+
+        document.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+        document.querySelector('.lightbox-content').addEventListener('click', (e) => {
+            closeLightbox();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert(currentLang === 'zh' ? '感谢您的留言！我会尽快回复您。' : 'Thank you for your message! I will reply soon.');
+        });
+
+        // Toggle section expand/collapse
+        function toggleSection(section) {
+            const grid = document.getElementById(`${section}Grid`);
+            const btn = document.getElementById(`${section}ExpandBtn`);
+            const icon = btn.querySelector('.icon');
+            const text = btn.querySelector('.text');
+            const hiddenItems = grid.querySelectorAll('.hidden-item');
+            
+            const isExpanded = btn.classList.contains('expanded');
+            
+            if (!isExpanded) {
+                // Expand - show all hidden items
+                hiddenItems.forEach(item => {
+                    item.classList.remove('hidden-item');
+                    item.classList.add('shown-item');
+                });
+                btn.classList.add('expanded');
+                icon.textContent = '−';
+                text.textContent = getNestedValue(i18n[currentLang], 'expand.collapse') || (currentLang === 'zh' ? '折叠 / Collapse' : 'Collapse');
+            } else {
+                // Collapse - hide items beyond first 4
+                const allItems = grid.querySelectorAll(`.${section}-item`);
+                allItems.forEach((item, index) => {
+                    if (index >= 4) {
+                        item.classList.add('hidden-item');
+                        item.classList.remove('shown-item');
+                    }
+                });
+                btn.classList.remove('expanded');
+                icon.textContent = '+';
+                text.textContent = getNestedValue(i18n[currentLang], 'expand.expand') || (currentLang === 'zh' ? '展开 / Expand' : 'Expand');
+                // Scroll to section top
+                document.getElementById(section).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('animate-in');
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .life-item').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
