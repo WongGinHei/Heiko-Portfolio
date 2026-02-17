@@ -1345,6 +1345,16 @@
             img, video { max-width: 100%; height: auto; }
             /* 锚点偏移，避免被固定导航栏遮挡 */
             section[id] { scroll-margin-top: 80px; }
+            /* 修复 life-grid 和 lifestyle-grid 重叠问题 */
+            .life-item:nth-child(2),
+            .life-item:nth-child(6) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .life-item, .lifestyle-item {
+                aspect-ratio: 1;
+                min-height: 150px;
+            }
         }
         
         /* 触摸设备优化 */
@@ -1945,11 +1955,11 @@
                 client: "LacunaMonologue",
                 description: "LacunaMonologue 2026春夏系列。",
                 thumbnail: "./LacunaMonologue-2026SS/LacunaMonologue-LookBook-2026SS/9cdeec6a4ea07914cf79a3926bdade16.jpg",
-                campaign: [],
-                lookbook: [
+                campaign: [
                     "./LacunaMonologue-2026SS/LacunaMonologue-LookBook-2026SS/9cdeec6a4ea07914cf79a3926bdade16.jpg",
                     "./LacunaMonologue-2026SS/LacunaMonologue-LookBook-2026SS/efedc0ad9ddaffdfb74fe18499bf7023.jpg"
-                ]
+                ],
+                lookbook: []
             },
             joepheee: {
                 title: "JOEPHEEE",
@@ -2007,6 +2017,7 @@
                 description: "NOODUU 2022春夏系列。",
                 thumbnail: "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215420_452_550.jpg",
                 campaign: [
+                    "./NOODUU-2022SS/NOODUUCampaign 2022SS/Preview-Film-NOODUU-2022SS.mp4",
                     "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215420_452_550.jpg",
                     "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215421_453_550.jpg",
                     "./NOODUU-2022SS/NOODUUCampaign 2022SS/微信图片_20260215215422_454_550.jpg",
@@ -2068,7 +2079,8 @@
                 client: "以纯",
                 description: "YISHION-2021SS",
                 thumbnail: "./YISHION-2021SS/微信图片_20260217000404_669_990.jpg",
-                campaign: [
+                campaign: [],
+                lookbook: [
                     "./YISHION-2021SS/微信图片_20260217000404_669_990.jpg",
                     "./YISHION-2021SS/微信图片_20260217000405_670_990.jpg",
                     "./YISHION-2021SS/微信图片_20260217000406_671_990.jpg",
@@ -2078,8 +2090,7 @@
                     "./YISHION-2021SS/微信图片_20260217000414_676_990.jpg",
                     "./YISHION-2021SS/微信图片_20260217000415_677_990.jpg",
                     "./YISHION-2021SS/微信图片_20260217000416_678_990.jpg"
-                ],
-                lookbook: []
+                ]
             },
             wedding8: {
                 title: "宴会厅",
