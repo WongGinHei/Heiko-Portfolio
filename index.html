@@ -1149,7 +1149,15 @@
             .projects-grid { grid-template-columns: 1fr; }
             .snap-grid { grid-template-columns: 1fr; }
             .lifestyle-grid { grid-template-columns: 1fr; }
-            .life-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+            .life-grid { 
+                grid-template-columns: 1fr; 
+                gap: 0.5rem; 
+            }
+            .life-item:nth-child(2),
+            .life-item:nth-child(6) {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
             
             .works-header, .creative-header, .snap-header, .lifestyle-header, .life-header {
                 flex-direction: column;
@@ -1332,16 +1340,6 @@
             img, video { max-width: 100%; height: auto; }
             /* 锚点偏移，避免被固定导航栏遮挡 */
             section[id] { scroll-margin-top: 80px; }
-            /* 修复 life-grid 和 lifestyle-grid 重叠问题 */
-            .life-item:nth-child(2),
-            .life-item:nth-child(6) {
-                grid-column: span 1;
-                grid-row: span 1;
-            }
-            .life-item, .lifestyle-item {
-                aspect-ratio: 1;
-                min-height: 150px;
-            }
         }
         
         /* 触摸设备优化 */
