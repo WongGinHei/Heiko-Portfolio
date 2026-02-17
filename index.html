@@ -125,9 +125,25 @@
             margin-bottom: 0.5rem;
         }
         .hero-tag .id {
-            font-size: 1rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.4rem;
+        }
+        .hero-tag .id::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, var(--white) 0%, transparent 100%);
+            opacity: 0.6;
         }
         .hero-year {
             font-size: 0.65rem;
@@ -1086,7 +1102,10 @@
             .hero-label-top { 
                 margin-bottom: 2rem; 
             }
-            .hero-tag .id { font-size: 0.85rem; }
+            .hero-tag .id { 
+                font-size: 0.8rem;
+                letter-spacing: 0.25em;
+            }
             .hero-meta-list { 
                 font-size: 0.6rem; 
                 line-height: 1.8;
@@ -1306,7 +1325,10 @@
             }
             .hero-image { height: 40vh; }
             .hero-title { font-size: 2.2rem; }
-            .hero-tag .id { font-size: 0.75rem; }
+            .hero-tag .id { 
+                font-size: 0.7rem;
+                letter-spacing: 0.2em;
+            }
             .about-vertical-title { font-size: 2rem; }
             .works-title, .creative-title, .snap-title, .lifestyle-title, .life-title {
                 font-size: 1.3rem;
